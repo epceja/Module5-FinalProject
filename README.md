@@ -26,4 +26,10 @@
 - https://www.youtube.com/watch?v=aEW8ZH6wj2o
 
 List of completed tasks:
-...
+Task 1.	Understand the project structure (onboarding). COMPLETED!
+Task 2.	Delete social network(s): e.g. facebook.  COMPLETED!
+Task 3.	Put sensitive information into a separate property file. COMPLETED!
+Task 4.	Mail settings. The values of these properties should be read from the machine’s environment variables when the server starts. COMPLETED!
+Task 7.	Refactor the com.codegym.jira.bugtracking.attachment.FileUtil#upload method. COMPLETED!
+Task 10.	Write a Dockerfile for the main server. COMPLETED!
+Task 11.	Write a docker-compose file to run the server container. COMPLETED!
