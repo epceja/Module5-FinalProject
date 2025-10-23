@@ -20,19 +20,35 @@ import java.nio.file.Paths;
 public class FileUtil {
     private static final String ATTACHMENT_PATH = "./attachments/%s/";
 
+//    public static void upload(MultipartFile multipartFile, String directoryPath, String fileName) {
+//        if (multipartFile.isEmpty()) {
+//            throw new IllegalRequestDataException("Select a file to upload.");
+//        }
+//
+//        File dir = new File(directoryPath);
+//        if (dir.exists() || dir.mkdirs()) {
+//            File file = new File(directoryPath + fileName);
+//            try (OutputStream outStream = new FileOutputStream(file)) {
+//                outStream.write(multipartFile.getBytes());
+//            } catch (IOException ex) {
+//                throw new IllegalRequestDataException("Failed to upload file" + multipartFile.getOriginalFilename());
+//            }
+//        }
+//    }
+
     public static void upload(MultipartFile multipartFile, String directoryPath, String fileName) {
         if (multipartFile.isEmpty()) {
             throw new IllegalRequestDataException("Select a file to upload.");
         }
 
-        File dir = new File(directoryPath);
-        if (dir.exists() || dir.mkdirs()) {
-            File file = new File(directoryPath + fileName);
-            try (OutputStream outStream = new FileOutputStream(file)) {
-                outStream.write(multipartFile.getBytes());
-            } catch (IOException ex) {
-                throw new IllegalRequestDataException("Failed to upload file" + multipartFile.getOriginalFilename());
-            }
+        try {
+            Path dir = Paths.get(directoryPath);
+            Files.createDirectories(dir);
+
+            Path filePath = dir.resolve(fileName);
+            Files.write(filePath, multipartFile.getBytes());
+        } catch (IOException ex) {
+            throw new IllegalRequestDataException("Failed to upload file " + multipartFile.getOriginalFilename());
         }
     }
 

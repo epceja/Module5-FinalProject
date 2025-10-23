@@ -1,0 +1,46 @@
+#docker run -p 5432:5432 --name postgres-db -e POSTGRES_USER=jira -e POSTGRES_PASSWORD=CodeGymJira
+#-e POSTGRES_DB=jira -e PGDATA=/var/lib/postgresql/data/pgdata -v ./pgdata:/var/lib/postgresql/data
+#-d postgres
+
+services:
+  postgres-db:
+    build:
+      context: ./docker/postgres-prod
+      dockerfile: Dockerfile
+    container_name: postgres-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_URL}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - jira-network
+    restart: unless-stopped
+
+#docker run -p 5433:5432 --name postgres-db-test -e POSTGRES_USER=jira -e POSTGRES_PASSWORD=CodeGymJira
+#-e POSTGRES_DB=jira-test -e PGDATA=/var/lib/postgresql/data/pgdata
+#-v ./pgdata-test:/var/lib/postgresql/data -d postgres
+
+  postgres-db-test:
+    build:
+      context: ./docker/postgres-test
+      dockerfile: Dockerfile
+    container_name: postgres-db-test
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_TEST_URL}
+      POSTGRES_USER: ${DB_TEST_USER}
+      POSTGRES_PASSWORD: ${DB_TEST_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./pgdata-test:/var/lib/postgresql/data
+    networks:
+      - jira-network
+    restart: unless-stopped

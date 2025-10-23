@@ -3,8 +3,8 @@ spring:
   init:
     mode: always
   datasource:
-    #url: jdbc:postgresql://localhost:5433/jira-test
+    #url: ${DB_TEST_URL}
     #La siguiente línea es para que corran las pruebas. No es lo que debe ser.
-    url: jdbc:postgresql://localhost:5432/jira
-    username: jira
-    password: CodeGymJira
+    url: ${DB_TEST_URL}
+    username: ${DB_TEST_USER}
+    password: ${DB_TEST_PASSWORD}
